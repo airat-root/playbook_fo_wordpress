@@ -1,0 +1,64 @@
+---
+- hosts: test
+  become: true
+  become_user: root
+  gather_facts: False
+  tasks:
+  - name: install python 2
+    raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
+ 
+  - name: install python-mysqldb
+    apt: pkg=python-mysqldb
+  
+  - name: Install nginx
+    apt: pkg=nginx state=latest
+
+  - name: Install mysql
+    apt: pkg=mysql-server state=latest
+
+  - name: Install php-fpm
+    apt: pkg=php-fpm state=latest
+
+  - name: Install php-mysql
+    apt: pkg=php-mysql state=latest
+
+  - name: Install nginx.conf
+    template: src=conf/default.j2 dest=/etc/nginx/sites-available/default owner=root group=root mode=0644
+    notify: reload nginx
+  
+  - name: creating database
+    mysql_db:
+      name: "wordpress"
+      state: "present"
+      login_user: "root"
+      login_password: ""
+
+  - name: creating database user
+    mysql_user:
+      name: "user"
+      password: "123"
+      priv: "wordpress .*:ALL"
+      state: "present"
+      login_user: "root"
+      login_password: ""
+
+  - name: downloade wordpress
+    get_url:
+      url: http://wordpress.org/latest.tar.gz
+      dest: /latest.tar.gz
+      mode: 0440
+
+  - name: unpack WordPress
+    shell: tar xvfz /latest.tar.gz -C /var/www/html/
+
+  - name: Install wordpress config
+    template: src=conf/wp-config.php.j2 dest=/var/www/html/wordpress/wp-config.php owner=root group=root mode=0644
+    notify: reload mysql-server  
+
+  - name: restart mysql-serve
+    shell: /etc/init.d/mysql restart
+
+  handlers:
+  - name: reload nginx
+    service: name=nginx state=reloaded
+
