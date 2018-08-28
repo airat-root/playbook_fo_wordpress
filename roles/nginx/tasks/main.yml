@@ -1,0 +1,6 @@
+  - name: Install nginx
+    apt: pkg=nginx state=latest
+
+  - name: Install nginx.conf
+    template: src=conf/default.j2 dest=/etc/nginx/sites-available/default owner=root group=root mode=0644
+    notify: reload nginx

@@ -1,0 +1,9 @@
+  - name: downloade wordpress
+    get_url: url=http://wordpress.org/latest.tar.gz dest=/latest.tar.gz mode=0440
+
+  - name: unpack WordPress
+    shell: tar xvfz /latest.tar.gz -C /var/www/html/
+
+  - name: Install wordpress config
+    template: src=conf/wp-config.php.j2 dest=/var/www/html/wordpress/wp-config.php owner=root group=root mode=0644
+

@@ -1,0 +1,5 @@
+  - name: Install php-fpm
+    apt: pkg=php-fpm state=latest
+
+  - name: Install php-mysql
+    apt: pkg=php-mysql state=latest

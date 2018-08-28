@@ -1,0 +1,13 @@
+---
+- hosts: all
+  become: true
+  become_user: root
+  gather_facts: False
+  roles:
+
+    - python
+    - php
+    - nginx
+    - wordpress
+    - mysql
+

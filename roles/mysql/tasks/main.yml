@@ -1,0 +1,11 @@
+  - name: Install mysql
+    apt: pkg=mysql-server state=latest
+
+  - name: creating database
+    mysql_db: name=wordpress state=present login_user=root login_password=""
+
+  - name: creating database user
+    mysql_user: name=user password=123 priv="wordpress .*:ALL" state="present" login_user=root login_password=""
+
+  - name: restart mysql-serve
+    shell: /etc/init.d/mysql restart

@@ -1,0 +1,6 @@
+  - name: install python
+    raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
+
+  - name: install python-mysqldb
+    apt: pkg=python-mysqldb
+
