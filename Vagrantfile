@@ -12,11 +12,11 @@ Vagrant.configure("2") do |config|
     override.vm.box = 'digital_ocean'
     override.vm.box_url = "https://github.com/devopsgroup-io/vagrant-digitalocean/raw/master/box/digital_ocean.box"
 
-    provider.token = '***********'
+    provider.token = '***'
     provider.image = 'ubuntu-16-04-x64'
-    provider.region = 'sgp1'
+    provider.region = 'ams3'
     provider.size = '512mb'
-    provider.ssh_key_name = '**********'
+    provider.ssh_key_name = '***'
   end
 
   #Provisioning

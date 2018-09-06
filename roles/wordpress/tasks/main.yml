@@ -2,5 +2,5 @@
     unarchive: src=http://wordpress.org/latest.tar.gz dest=/var/www/html/ remote_src=yes
 
   - name: Install wordpress config
-    template: src=conf/wp-config.php.j2 dest=/var/www/html/wordpress/wp-config.php owner=root group=root mode=0644
+    template: src=wp-config.php.j2 dest=/var/www/html/wordpress/wp-config.php owner=root group=root mode=0644
 
